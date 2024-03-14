@@ -142,8 +142,8 @@ function updateTimers() {
       </tr>
     `;
     document.getElementById('timer').innerHTML = `
-      Time Until Sehri: ${formatTime(sehriDiff)} <br>
-      Time Until Iftar: ${formatTime(iftarDiff)}
+      সেহরি: ${formatTime(sehriDiff)} <br>
+      ইফতার: ${formatTime(iftarDiff)}
     `;
   } else {
     document.getElementById('timer').textContent = "No sehri and iftar timings available for today.";
