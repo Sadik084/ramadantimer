@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sehri and Iftar Timer</title>
+</head>
+<style>
+    body{
+        background: #2f3640;
+        color: white;
+    }
+    h1{
+        text-align: center;
+    }
+    table {
+        border: 1px solid #dddd;
+        border-collapse: collapse;
+        padding: 10px;
+    }
+    table thead tr th{
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: center;
+        font-size: 25px;
+}
+table tbody tr td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    font-size: 20px;
+}
+#table {
+    display: flex ;
+    justify-content: center;
+    margin-top: 50px;
+}
+#timerdiv {
+    display: flex;
+    justify-content: center;
+    margin-top: 35px;
+    font-size: 30px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 900;
+}
+
+
+</style>
+<body>
+<h1>Sehri and Iftar Timer</h1>
+<div id="table">
+<table>
+  <thead>
+    <tr>
+      <th>Day</th>
+      <th>Date</th>
+      <th>Day of the Week</th>
+      <th>Sehri (am)</th>
+      <th>Iftar (pm)</th>
+    </tr>
+  </thead>
+  <tbody id="timings">
+    <!-- Timings will be filled dynamically -->
+  </tbody>
+</table>
+</div>
+
+<div id="timerdiv">
+<p id="timer"></p>
+</div>
+
+<script>
+// Ramadan timings data
+const ramadanTimings = [
+  { day: 1, date: '12 March', dayOfWeek: 'Tuesday', sehri: '04:50', iftar: '06:09 PM' },
+  { day: 2, date: '13 March', dayOfWeek: 'Wednesday', sehri: '04:49', iftar: '06:10 PM' },
+  { day: 3, date: '14 March', dayOfWeek: 'Thursday', sehri: '04:48', iftar: '06:10 PM' },
+  { day: 4, date: '15 March', dayOfWeek: 'Friday', sehri: '04:47', iftar: '06:10 PM' },
+  { day: 5, date: '16 March', dayOfWeek: 'Saturday', sehri: '04:46', iftar: '06:11 PM' },
+  { day: 6, date: '17 March', dayOfWeek: 'Sunday', sehri: '04:45', iftar: '06:11 PM' },
+  { day: 7, date: '18 March', dayOfWeek: 'Monday', sehri: '04:44', iftar: '06:12 PM' },
+  { day: 8, date: '19 March', dayOfWeek: 'Tuesday', sehri: '04:43', iftar: '06:12 PM' },
+  { day: 9, date: '20 March', dayOfWeek: 'Wednesday', sehri: '04:42', iftar: '06:12 PM' },
+  { day: 10, date: '21 March', dayOfWeek: 'Thursday', sehri: '04:41', iftar: '06:13 PM' },
+  { day: 11, date: '22 March', dayOfWeek: 'Friday', sehri: '04:40', iftar: '06:13 PM' },
+  { day: 12, date: '23 March', dayOfWeek: 'Saturday', sehri: '04:39', iftar: '06:14 PM' },
+  { day: 13, date: '24 March', dayOfWeek: 'Sunday', sehri: '04:38', iftar: '06:14 PM' },
+  { day: 14, date: '25 March', dayOfWeek: 'Monday', sehri: '04:37', iftar: '06:14 PM' },
+  { day: 15, date: '26 March', dayOfWeek: 'Tuesday', sehri: '04:36', iftar: '06:15 PM' },
+  { day: 16, date: '27 March', dayOfWeek: 'Wednesday', sehri: '04:35', iftar: '06:15 PM' },
+  { day: 17, date: '28 March', dayOfWeek: 'Thursday', sehri: '04:34', iftar: '06:16 PM' },
+  { day: 18, date: '29 March', dayOfWeek: 'Friday', sehri: '04:32', iftar: '06:16 PM' },
+  { day: 19, date: '30 March', dayOfWeek: 'Saturday', sehri: '04:31', iftar: '06:17 PM' },
+  { day: 20, date: '31 March', dayOfWeek: 'Sunday', sehri: '04:30', iftar: '06:17 PM' },
+  { day: 21, date: '01 April', dayOfWeek: 'Monday', sehri: '04:29', iftar: '06:18 PM' },
+  { day: 22, date: '02 April', dayOfWeek: 'Tuesday', sehri: '04:28', iftar: '06:18 PM' },
+  { day: 23, date: '03 April', dayOfWeek: 'Wednesday', sehri: '04:27', iftar: '06:19 PM' },
+  { day: 24, date: '04 April', dayOfWeek: 'Thursday', sehri: '04:26', iftar: '06:19 PM' },
+  { day: 25, date: '05 April', dayOfWeek: 'Friday', sehri: '04:25', iftar: '06:20 PM' },
+  { day: 26, date: '06 April', dayOfWeek: 'Saturday', sehri: '04:24', iftar: '06:20 PM' },
+  { day: 27, date: '07 April', dayOfWeek: 'Sunday', sehri: '04:23', iftar: '06:21 PM' },
+  { day: 28, date: '08 April', dayOfWeek: 'Monday', sehri: '04:22', iftar: '06:21 PM' },
+  { day: 29, date: '09 April', dayOfWeek: 'Tuesday', sehri: '04:21', iftar: '06:22 PM' },
+  { day: 30, date: '10 April', dayOfWeek: 'Wednesday', sehri: '04:20', iftar: '06:22 PM' }
+];
+
+
+// Function to update timers
+function updateTimers() {
+  const now = new Date();
+
+  // Find today's timings based on the current date
+  const todayTimings = ramadanTimings.find(timing => {
+    const [day, month] = timing.date.split(' ');
+    return now.getDate() == parseInt(day) && month === now.toLocaleString('default', { month: 'long' });
+  });
+
+  if (todayTimings) {
+    const sehriTime = new Date(`${now.getFullYear()} ${todayTimings.date} ${todayTimings.sehri}`);
+    const iftarTime = new Date(`${now.getFullYear()} ${todayTimings.date} ${todayTimings.iftar}`);
+
+    // Calculate time remaining for sehri and iftar
+    const sehriDiff = sehriTime - now;
+    const iftarDiff = iftarTime - now;
+
+    // Format time remaining
+    const formatTime = (timeDiff) => {
+      const hours = Math.floor(timeDiff / (1000 * 60 * 60));
+      const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+      return `${hours} hours ${minutes} minutes ${seconds} seconds`;
+    };
+
+    // Display timings and countdown
+    document.getElementById('timings').innerHTML = `
+      <tr>
+        <td>${todayTimings.day}</td>
+        <td>${todayTimings.date}</td>
+        <td>${todayTimings.dayOfWeek}</td>
+        <td>${todayTimings.sehri}</td>
+        <td>${todayTimings.iftar}</td>
+      </tr>
+    `;
+    document.getElementById('timer').innerHTML = `
+      Time Until Sehri: ${formatTime(sehriDiff)} <br>
+      Time Until Iftar: ${formatTime(iftarDiff)}
+    `;
+  } else {
+    document.getElementById('timer').textContent = "No sehri and iftar timings available for today.";
+  }
+}
+
+// Update timers every second
+setInterval(updateTimers, 1000);
+
+// Initial update
+updateTimers();
+</script>
+</body>
+</html>
