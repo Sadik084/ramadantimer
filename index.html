@@ -7,8 +7,10 @@
 </head>
 <style>
     body{
-        background: #2f3640;
+        background: url("https://raw.githubusercontent.com/Sadik084/ramadantimer/main/5110786.jpg");
         color: white;
+        background-repeat: no-repeat;
+        background-size: cover;
     }
     h1{
         text-align: center;
@@ -142,11 +144,11 @@ function updateTimers() {
       </tr>
     `;
     document.getElementById('timer').innerHTML = `
-      সেহরি: ${formatTime(sehriDiff)} <br>
-      ইফতার: ${formatTime(iftarDiff)}
+      Sehri: ${formatTime(sehriDiff)} <br>
+      Iftar: ${formatTime(iftarDiff)}
     `;
   } else {
-    document.getElementById('timer').textContent = "No sehri and iftar timings available for today.";
+    document.getElementById('timer').textContent = "Eid Mubarak";
   }
 }
 
