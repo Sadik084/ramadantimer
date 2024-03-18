@@ -109,7 +109,7 @@ const ramadanTimings = [
   { day: 4, date: '15 March', dayOfWeek: 'Friday', sehri: '04:47', iftar: '06:10 PM' },
   { day: 5, date: '16 March', dayOfWeek: 'Saturday', sehri: '04:46', iftar: '06:11 PM' },
   { day: 6, date: '17 March', dayOfWeek: 'Sunday', sehri: '04:46', iftar: '06:12 PM' },
-  { day: 7, date: '18 March', dayOfWeek: 'Monday', sehri: '04:45', iftar: '06:12 PM' },
+  { day: 7, date: '18 March', dayOfWeek: 'Monday', sehri: '04:45', iftar: '05:59 PM' },
   { day: 8, date: '19 March', dayOfWeek: 'Tuesday', sehri: '04:45', iftar: '06:13 PM' },
   { day: 9, date: '20 March', dayOfWeek: 'Wednesday', sehri: '04:44', iftar: '06:13 PM' },
   { day: 10, date: '21 March', dayOfWeek: 'Thursday', sehri: '04:43', iftar: '06:13 PM' },
@@ -170,7 +170,7 @@ function updateTimers() {
 
       if (iftarDiff <= 1000) {
         // Iftar time has arrived, start the audio
-        const audio = new Audio('azan1.mp3'); // Replace 'path_to_audio_file.mp3' with the actual path to your audio file
+        const audio = new Audio('https://github.com/Sadik084/ramadantimer/raw/main/azan1.mp3'); // Replace 'path_to_audio_file.mp3' with the actual path to your audio file
         audio.play();
         audio.addEventListener('ended', function() {
           // Stop the audio
