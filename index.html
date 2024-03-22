@@ -170,7 +170,7 @@ function updateTimers() {
 
       if (iftarDiff <= 1000) {
         // Iftar time has arrived, start the audio
-        const audio = new Audio('https://github.com/Sadik084/ramadantimer/raw/main/azan1.mp3'); // Replace 'path_to_audio_file.mp3' with the actual path to your audio file
+        const audio = new Audio('azan1.mp3'); // Replace 'path_to_audio_file.mp3' with the actual path to your audio file
         audio.play();
         audio.addEventListener('ended', function() {
           // Stop the audio
